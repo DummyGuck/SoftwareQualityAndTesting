@@ -1,0 +1,254 @@
+
+table {
+  margin-left: auto;
+  margin-right: auto;
+  width: 90%;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+* body {
+  width: 100vw;
+  height: 100vh;
+  font-family: segoe;
+  color: #57AAB4;
+}
+
+* body div.main {
+  position: relative;
+  width: 100%;
+  height: calc(100% - 128px);
+}
+
+* body div.main div.beta {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+* body div.main div.beta h1 {
+  position: absolute;
+  top: 25%;
+  right: 25%;
+  width: 65px;
+  height: 45px;
+  color: #FFF;
+  font-size: 2.5rem;
+  font-weight: lighter;
+}
+
+* body div.main div.login-wrapper {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+* body div.main div.login-wrapper div.login {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 424px;
+  height: 380px;
+}
+
+* body div.main div.login-wrapper div.login img {
+  width: 290px;
+  height: 80px;
+}
+
+* body div.main div.login-wrapper div.login div.form {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  width: 100%;
+  height: auto;
+  background-color: #FFF;
+}
+
+* body div.main div.login-wrapper div.login div.form input {
+  widows: 100%;
+  height: 67px;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  border: 2px solid #57AAB4;
+  font-size: 1.5rem;
+  color: #57AAB4;
+  text-indent: 15px;
+}
+
+* body div.main div.login-wrapper div.login div.form input::-webkit-input-placeholder {
+  line-height: 67px;
+  color: #57AAB4;
+}
+
+* body div.main div.login-wrapper div.login div.form input:-ms-input-placeholder {
+  line-height: 67px;
+  color: #57AAB4;
+}
+
+* body div.main div.login-wrapper div.login div.form input::-ms-input-placeholder {
+  line-height: 67px;
+  color: #57AAB4;
+}
+
+* body div.main div.login-wrapper div.login div.form input::placeholder {
+  line-height: 67px;
+  color: #57AAB4;
+}
+
+* body div.main div.login-wrapper div.login div.form input:nth-child(2) {
+  margin-top: -2px;
+}
+
+* body div.main div.login-wrapper div.login button {
+  width: 100%;
+  height: 67px;
+  background-color: #57AAB4;
+  border: none;
+  font-size: 1.5rem;
+  color: #FFF;
+  -webkit-transition: .1s linear;
+  transition: .1s linear;
+  cursor: pointer;
+}
+
+* body div.main div.login-wrapper div.login button:hover {
+  background-color: #3b7c84;
+}
+
+* body div.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 128px;
+  background-color: #57AAB4;
+}
+
+@media only screen and (min-width: 768px) and (max-width: 1024px) {
+  * {
+    margin: 0;
+    padding: 0;
+  }
+  * body div.main {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+  }
+  * body div.main div.beta {
+    position: unset;
+  }
+  * body div.main div.beta img {
+    display: none;
+  }
+  * body div.main div.beta h1 {
+    top: 0;
+    right: 10%;
+    color: #57AAB4;
+  }
+  * body div.main div.login {
+    width: 424px;
+    min-width: 50%;
+  }
+}
+
+@media only screen and (min-device-width: 360px) and (max-device-width: 846px) {
+  * {
+    margin: 0;
+    padding: 0;
+  }
+  * body div.main div.beta {
+    position: relative;
+    width: 100%;
+  }
+  * body div.main div.beta img {
+    display: none;
+  }
+  * body div.main div.beta h1 {
+    color: #57AAB4;
+    top: 15%;
+    right: 15%;
+  }
+}
+
+@media only screen and (min-device-width: 360px) and (max-device-width: 846px) and (orientation: landscape) {
+  * {
+    margin: 0;
+    padding: 0;
+  }
+  * body {
+    width: 100%;
+    height: 100vh;
+    position: relative;
+  }
+  * body div.main {
+    width: 100%;
+    height: 100%;
+  }
+  * body div.main div.beta h1 {
+    top: 5%;
+    right: 10%;
+  }
+  * body div.main div.login-wrapper {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    -webkit-box-align: baseline;
+        -ms-flex-align: baseline;
+            align-items: baseline;
+    width: 100%;
+    height: 100%;
+  }
+  * body div.main div.login-wrapper div.login {
+    height: auto;
+    margin-top: 15px;
+  }
+  * body div.main div.login-wrapper div.login img {
+    width: 30%;
+    height: auto;
+  }
+  * body div.main div.login-wrapper div.login div.form input {
+    line-height: 45px;
+    height: 45px;
+  }
+  * body div.main div.login-wrapper div.login button {
+    height: 45px;
+  }
+  * body div.footer {
+    position: absolute;
+    bottom: 0;
+    height: 75px;
+    width: 100vw;
+  }
+  * body div.footer-hidden {
+    display: none;
+  }
+}
+/*# sourceMappingURL=index.css.map */
