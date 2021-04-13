@@ -12,7 +12,13 @@
       <script src="./index.js" defer></script>
    </head>
    <body>
-      <input id = "startGame" type = "button" onclick = "generateTable()" value = "Display" >
-      <table id = "gameTable"></table>
+       <div class = "centering" id = "startGameDiv">
+         <button id = "startGameButton" class="button startGameButton" onclick = "startGame()">Start Game</button>
+         <table id = "statTable"></table>
+      </div>
+      <div id="actualGame"> 
+         <table id = "gameTable"></table>
+         <table id = "combatTable"></table>
+      </div>
    </body>
 </html>
