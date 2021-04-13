@@ -117,7 +117,6 @@ document.addEventListener('keydown', function(event) {
   
   if(isGameStarted && !isCombat)
   {
-    console.log(event.keyCode);
     if((event.keyCode == 68)) //right direction - press 'D'
     {
       movementRight();
@@ -265,8 +264,6 @@ function startCombat(){
   isCombat = true;
   monster.currentHP = monster.maxHP;
 
-  console.log(monster.currentHP);
-
   drawGameTable(monster);
 }
 
@@ -337,8 +334,6 @@ function createSpellButton(spellId) {
   let spell = spells[spellId];
   let buttonId = "button" +spellId;
 
-  console.log(spellId);
-
   let button = document.createElement("button");
   button.id = buttonId;
   button.onclick = function() { 
@@ -406,8 +401,11 @@ function usePotionButton() {
 }
 
 function monsterAttack() {
-  if(monster.currentMP < monster.spell.manaCost)
-    basicAttack(moster, player);
+
+  let spell = spells[monster.spell];
+  console.log("monster spell cost first " + spell.manaCost);
+  if(monster.currentMP < spell.manaCost)
+    basicAttack(monster, player);
   else
     useSpell(monster.spell, monster, player)
 }
@@ -416,13 +414,14 @@ function useSpell(spellId, caster, target) {
   let spell = spells[spellId];
 
   console.log(spell.displayName);
+
+  console.log("monster spell cost second " + spell.manaCost)
   if(caster.currentMP < spell.manaCost){
     log.unshift("Not enough mana to use this spell");
   }
   else {
     caster.currentMP -= spell.manaCost;
 
-    console.log(target.resist[spell.type])
     let actualDmg = spell.dmg-target.resist[spell.type];
     if(actualDmg < 0) {
       log.unshift("Target resistent to this type of attack. No damage dealt.")
