@@ -378,11 +378,15 @@ function usePotionButton() {
   let button = document.createElement("button");
   button.id = "usePotionButton";
   button.onclick = function() {
-    if(player.phPotions > 0) {
+    if(player.hpPotions > 0) {
       player.currentHP += 50;
       if(player.currentHP > player.maxHP)
         player.currentHP = player.maxHP;
       player.hpPotions -= 1;
+
+      log.unshift("HP potion used. 50 damage healed.");
+
+      monsterAttack();
 
       displayStats();
       drawGameTable();
