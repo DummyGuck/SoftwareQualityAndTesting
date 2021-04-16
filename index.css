@@ -1,32 +1,48 @@
 
-table {
-  margin-left: auto;
-  margin-right: auto;
+body {
+  background-image: url("./resources/backgroundForest.jpg");
+  height: 100vh; 
+  width: 100vw;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.actualGame {
   width: 90%;
+  
+  justify-content: center;
+  align-items: center;
 }
 
 .centering {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 200px;
+  height: 22vh;
+  width: 98vw;
   border: 3px solid green; 
+
+  background-image: url("./resources/ambientBackground.jpeg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.listCell {
+  background-image: url("./resources/ambientBackground.jpeg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 .startGameButton {
-  background-color: #4CAF50; /* Green */
-  border: none;
+  background-color: #d67f15; 
+  border: 1px solid brown;
   color: white;
   padding: 15px 32px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
   font-size: 16px;
-}
-
-.actualGame {
-  background-image: url("resources/backgroundForest.jpg");
-}
-.monster {
-  text-align: "margin-right"
 }
