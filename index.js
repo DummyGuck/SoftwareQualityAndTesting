@@ -8,6 +8,7 @@ var monsterPositions = new Array(9);
 var isCombat = false;
 var isPlayerAlive = true;
 var isGameStarted = false;
+var monsterKilled = 0;
 
 var player = new Object();
 var monster = new Object();
@@ -198,10 +199,10 @@ function mapInitialization(playerClass){
 
   isPlayerAlive = true;
   playerPos = 0;
+  monsterKilled = 0;
   
   let counter = 0;
 
-  //replaced 50 with 49. You only have 49 index to place monsters. 49 is the last index in the array.
   treeOfLife = Math.floor(Math.random() * 20) + 13; // number from 1..50 can't be player's initial position 
   
   while (counter < 10)
@@ -259,20 +260,20 @@ function rest(){
 
 function movementRight()
 {
-  if (playerPos < 50)
-  {
-    playerPos += 1;
-    generateTable();
-  }
+	if (playerPos < 50)
+	{
+		playerPos += 1;
+		generateTable();
+	}
 }
 
 function movementLeft()
 {
-  if (playerPos > 0)
-  {
-    playerPos -= 1;
-    generateTable();
-  }
+	if (playerPos > 0)
+	{
+		playerPos -= 1;
+		generateTable();
+	}
 }
 
 function generateTable(){
@@ -379,10 +380,10 @@ function loadImg(cell) {
       return "resources/TreeOfLife.jpg";
       break;
     case Actor.Monster:
-      return "resources/yellow.png";
+      return "resources/monster.jpg";
       break;
     default:
-      return "resources/road.png";
+      return "resources/road.png"; //resources/road.png
   } 
 }
 
@@ -554,11 +555,16 @@ function usePotionButton() {
 }
 
 function monsterDefeated(){
-  monster.currentHP = 0;
-  monsterPositions.splice (monsterPositions.indexOf(playerPos), 1);
-  log.unshift({msg: monster.displayName + " has been defeated.", color: "orange"});
-  isCombat = false;
-  drawCombatTable();
+	monster.currentHP = 0;
+	monsterPositions.splice (monsterPositions.indexOf(playerPos), 1);
+	log.unshift({msg: monster.displayName + " has been defeated.", color: "orange"});
+	isCombat = false;
+	monsterKilled += 1;
+	drawCombatTable();
+	if(9 < monsterKilled )
+	{
+		playerWon();
+	}
 }
 
 function monsterAttack() {
@@ -626,4 +632,14 @@ function basicAttack(caster, target){
 
   displayStats();
   drawCombatTable();
+}
+
+function playerWon(){
+	let actualGame = document.getElementById("actualGame");
+	actualGame.style.display = "none";
+	
+	let body = document.getElementsByTagName("body")[0];
+	body.style.backgroundImage = "url(./resources/victory.jpg)";
+	body.style.backgroundSize = "800px 500px";
+	
 }
