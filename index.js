@@ -212,8 +212,7 @@ function mapInitialization(playerClass){
       counter += 1;
       monsterPositions[counter] = rndPos;
     }
-  }
-  
+  } 
 }
 
 function startGame(playerClass){
@@ -242,19 +241,19 @@ function initNewStage(){
     rest();
 }
 
-function rest(){
+function rest(callback){
   if(player.canRest) {
     player.currentHP = player.maxHP;
     player.currentMP = player.maxMP;
     player.canRest = false;
     log.unshift({msg: "Tree of Life blessed you. HP and mana restored to maximum.", color: "green"});
-
-    displayStats();
-    drawCombatTable();
   }
   else {
     log.unshift({msg: "You've been already blessed by the Tree of Life.", color: "orange"});
-    drawCombatTable();
+  }
+
+  if(callback && typeof callback =='function') {
+    callback();
   }
 }
 
@@ -523,11 +522,13 @@ function createBasicAttackButton() {
   return button;
 }
 
-function usePotionButton() {
-  let button = document.createElement("button");
-  button.id = "usePotionButton";
-  button.onclick = function() {
-    if(player.hpPotions > 0) {
+function drawCallback() {
+      displayStats();
+      drawCombatTable();
+}
+
+function usePotion(callback) {
+  if(player.hpPotions > 0) {
       player.currentHP += 50;
       if(player.currentHP > player.maxHP)
         player.currentHP = player.maxHP;
@@ -536,13 +537,18 @@ function usePotionButton() {
       log.unshift({msg: "HP potion used. 50 damage healed.", color : "green"});
 
       if(isCombat)
-        monsterAttack();
+            monsterAttack();
 
-      displayStats();
-      drawCombatTable();
-    }
+      if(callback && typeof callback == 'function') {
+        callback();
+      }
   }
+}
 
+function usePotionButton() {
+  let button = document.createElement("button");
+  button.id = "usePotionButton";
+  button.onclick = function() { usePotion(drawCallback) };
   button.innerHTML = 
         "Use HP Potion" + 
         ", heal: 50"+
@@ -554,17 +560,20 @@ function usePotionButton() {
   return button;
 }
 
-function monsterDefeated(){
+function monsterDefeated(callback){
 	monster.currentHP = 0;
 	monsterPositions.splice (monsterPositions.indexOf(playerPos), 1);
 	log.unshift({msg: monster.displayName + " has been defeated.", color: "orange"});
 	isCombat = false;
 	monsterKilled += 1;
-	drawCombatTable();
 	if(9 < monsterKilled )
 	{
 		playerWon();
 	}
+
+  if(callback && typeof callback == 'function') {
+    callback();
+  }
 }
 
 function monsterAttack() {
@@ -584,7 +593,6 @@ function monsterAttack() {
 
       displayStats();
       drawCombatTable();
-
 
       document.getElementById("startGameButton").style.display = "initial";
   }
@@ -643,3 +651,32 @@ function playerWon(){
 	body.style.backgroundSize = "800px 500px";
 	
 }
+
+function sum(a, b) {
+  return a + b;
+}
+/*
+module.exports = {
+  //variables
+  gameTable,
+  log,
+
+  playerPos,
+  treeOfLife,
+  monsterPositions,
+
+  isCombat,
+  isPlayerAlive,
+  isGameStarted,
+  monsterKilled,
+
+  player,
+  monster,
+
+  //functions
+  usePotion,
+  sum
+};
+*/
+module.exports.vars = {player: player, playerTypes:playerTypes };
+module.exports.functions = {usePotion: usePotion}
