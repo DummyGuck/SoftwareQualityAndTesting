@@ -535,20 +535,18 @@ function drawCallback() {
 function usePotion(callback, asd = 20) {
   asd = 30;
 
-  if(player.hpPotions > 0) {
-      player.currentHP += 50;
-      if(player.currentHP > player.maxHP)
-        player.currentHP = player.maxHP;
-      player.hpPotions -= 1;
+  player.currentHP += 50;
+  if(player.currentHP > player.maxHP)
+    player.currentHP = player.maxHP;
+  player.hpPotions -= 1;
 
-      log.unshift({msg: "HP potion used. 50 damage healed.", color : "green"});
+  log.unshift({msg: "HP potion used. 50 damage healed.", color : "green"});
 
-      if(isCombat)
-            monsterAttack();
+  if(isCombat)
+        monsterAttack();
 
-      if(callback && typeof callback == 'function') {
-        callback();
-      }
+  if(callback && typeof callback == 'function') {
+    callback();
   }
 }
 
