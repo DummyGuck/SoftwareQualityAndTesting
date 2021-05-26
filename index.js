@@ -127,7 +127,7 @@ var playerTypes = {
   currentHP: 200,
   maxMP: 300,
   currentMP: 300,
-  basedmg: 10,
+  basedmg: 20,
   resist: {
     0: 8,
     1: 8,
@@ -229,7 +229,7 @@ function initNewStage(){
   for (let x = 0; x <= monsterPositions.length; ++x){
     if(playerPos == monsterPositions[x]) {
       monster = Math.random() < 0.5 ? monsters[0] : monsters[1];
-      startCombat(drawCombatTable);
+      startCombat();
     }
     gameTable[monsterPositions[x]] = Actor.Monster;
   }
@@ -245,8 +245,7 @@ function rest(callback){
   if(player.canRest) {
     player.currentHP = player.maxHP;
     player.currentMP = player.maxMP;
-    if(player.currentMP != player.maxMP)
-      player.canRest = false;
+    player.canRest = false;
     log.unshift({msg: "Tree of Life blessed you. HP and mana restored to maximum.", color: "green"});
   }
   else {
@@ -387,7 +386,7 @@ function loadImg(cell) {
   } 
 }
 
-function startCombat(callback){
+function startCombat(){
   isCombat = true;
   monster.currentHP = monster.maxHP;
   monster.currentMP = monster.maxMP;
@@ -397,11 +396,7 @@ function startCombat(callback){
   console.log(monster.currentMP);
   log.unshift({msg : monster.displayName + " has appeared.", color: "yellow"});
 
-  
-  if(callback && typeof callback == 'function') {
-        callback();
-      }
-  //drawCombatTable(monster);
+  drawCombatTable(monster);
 }
 
 function drawCombatTable(){
@@ -483,9 +478,9 @@ function createSpellButton(spellId) {
   let button = document.createElement("button");
   button.id = buttonId;
   button.onclick = function() { 
-    useSpell(spellId, player, monster, drawCallback);
+    useSpell(spellId, player, monster);
     if(monster.currentHP > 0) {
-      monsterAttack(drawCallback);
+      monsterAttack();
     }
     else {
       monsterDefeated();
@@ -507,7 +502,7 @@ function createBasicAttackButton() {
   let button = document.createElement("button");
   button.id = "basicAttackButton";
   button.onclick = function() { 
-    basicAttack(player, monster, drawCallback); 
+    basicAttack(player, monster); 
     if(monster.currentHP > 0){
       monsterAttack();
     }
@@ -532,9 +527,7 @@ function drawCallback() {
       drawCombatTable();
 }
 
-function usePotion(callback, asd = 20) {
-  asd = 30;
-
+function usePotion(callback) {
   if(player.hpPotions > 0) {
       player.currentHP += 50;
       if(player.currentHP > player.maxHP)
@@ -583,13 +576,13 @@ function monsterDefeated(callback){
   }
 }
 
-function monsterAttack(callback) {
+function monsterAttack() {
 
   let spell = spells[monster.spell];
   if(monster.currentMP < spell.manaCost)
-    basicAttack(monster, player, drawCallback, drawCallback);
+    basicAttack(monster, player);
   else
-    useSpell(monster.spell, monster, player, drawCallback)
+    useSpell(monster.spell, monster, player)
 
   if(player.currentHP <= 0) {
       player.currentHP = 0;
@@ -598,13 +591,14 @@ function monsterAttack(callback) {
 
       log.unshift({msg: monster.displayName + " killed you. Your andventure has ended. :\"("})
 
-      if(callback && typeof callback == 'function') {
-        callback();
-      }
+      displayStats();
+      drawCombatTable();
+
+      document.getElementById("startGameButton").style.display = "initial";
   }
 }
 
-function useSpell(spellId, caster, target, callback) {
+function useSpell(spellId, caster, target) {
   let spell = spells[spellId];
 
   if(caster.currentMP < spell.manaCost){
@@ -627,13 +621,11 @@ function useSpell(spellId, caster, target, callback) {
     }
   }
 
-
-  if(callback && typeof callback == 'function') {
-      callback();
-  }
+  displayStats();
+  drawCombatTable();
 }
 
-function basicAttack(caster, target, callback){
+function basicAttack(caster, target){
   let actualDmg = caster.basedmg-target.resist[SpellType.Phisical];
   if(actualDmg < 0) {
     log.unshift({msg: target.displayName + "received no damage. Target is resistent.", color: "orange"});
@@ -646,9 +638,8 @@ function basicAttack(caster, target, callback){
     log.unshift({msg: msg, color: color});
   } 
 
-  if(callback && typeof callback == 'function') {
-    callback();
-  }
+  displayStats();
+  drawCombatTable();
 }
 
 function playerWon(){
@@ -661,16 +652,31 @@ function playerWon(){
 	
 }
 
-module.exports.vars = {
-  player: player,
-  playerTypes: playerTypes,
-  monster: monster,
-  monsterTypes: monsters,
-  SpellType: SpellType,
-  SpellId: SpellId,
-  isCombat: isCombat,
-  isPlayerAlive: isPlayerAlive,
-  monsterKilled: monsterKilled,
-  Class: Class
+function sum(a, b) {
+  return a + b;
+}
+/*
+module.exports = {
+  //variables
+  gameTable,
+  log,
+
+  playerPos,
+  treeOfLife,
+  monsterPositions,
+
+  isCombat,
+  isPlayerAlive,
+  isGameStarted,
+  monsterKilled,
+
+  player,
+  monster,
+
+  //functions
+  usePotion,
+  sum
 };
-module.exports.functions = {usePotion: usePotion, rest: rest}
+*/
+module.exports.vars = {player: player, playerTypes:playerTypes };
+module.exports.functions = {usePotion: usePotion}
